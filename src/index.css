@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap');
+
+:root {
+  /* Core Colors */
+  --space-dark: #000000;
+  --space-black: #000000;
+  --neon-cyan: #00ffcc;
+  --neon-blue: #0088ff;
+  --neon-purple: #ff00ff;
+  --neon-green: #00ff00;
+  --neon-red: #ff0000;
+  --neon-orange: #ff9900;
+  
+  /* UI Colors */
+  --text-main: #00ff00; /* Default terminal text is now green */
+  --text-muted: rgba(0, 255, 0, 0.6);
+  --panel-bg: #000000;
+  --panel-border: #00ff00;
+  --panel-border-hover: #00ffcc;
+  
+  /* Fonts */
+  --font-hud: 'Space Mono', monospace;
+  --font-mono: 'Space Mono', monospace;
+  --font-sans: 'Space Mono', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #000000;
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  
+  /* Pure dark background */
+  background: #000000;
+  
+  /* CRT Scanline Overlay */
+  background-image: linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+  background-size: 100% 4px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--space-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 243, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan);
+}
+
+/* Terminal Panel Base */
+.glass-panel {
+  background: rgba(0, 10, 5, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(0, 255, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel:hover {
+  border-color: var(--panel-border-hover);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 255, 0, 0.15), 0 0 15px rgba(0, 255, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Corner Decorations for Panels */
+.glass-panel::before,
+.glass-panel::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.glass-panel::before {
+  top: 0;
+  left: 0;
+  border-top-color: var(--neon-cyan);
+  border-left-color: var(--neon-cyan);
+  border-top-left-radius: 12px;
+}
+
+.glass-panel::after {
+  bottom: 0;
+  right: 0;
+  border-bottom-color: var(--neon-cyan);
+  border-right-color: var(--neon-cyan);
+  border-bottom-right-radius: 12px;
+}
+
+/* Typography Helpers */
+.hud-title {
+  font-family: var(--font-hud);
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mono-text {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Animations */
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0.8; }
+}
+
+.pulse {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes scanline {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+
+.scanline {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to bottom, transparent, rgba(0, 243, 255, 0.4), transparent);
+  animation: scanline 4s linear infinite;
+  opacity: 0.5;
+  pointer-events: none;
+}
